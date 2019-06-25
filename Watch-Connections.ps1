@@ -36,9 +36,15 @@ if (!(Test-Path -Path $FilePath))
     Read-Host "Press Enter to exit"
     Exit
 }
+
+$Computers = Get-Content -Path $FilePath
+if ($Computers.Length -eq 0) 
+{
+    Exit
+}
     
 $Success = $False
-ForEach ($Computer in (Get-Content -Path $FilePath)) 
+ForEach ($Computer in $Computers) 
 {
     if ($PSVersionTable.PSVersion.Major -eq 6)
     {   # PowerShell Core 6
