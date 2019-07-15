@@ -85,7 +85,7 @@ while ($HashTable.Count -gt 1){
     
     # Satisfied if at least 1 duplicate
     if ($Duplicates) {
-        @($FirstPairKey, $Duplicates, "`r`n" ) | Out-File -FilePath $ResultsFile -Append
+        @($FirstPairValue, $FirstPairKey, $Duplicates, "`r`n" ) | Out-File -FilePath $ResultsFile -Append
     }
     
     # Progress bar
