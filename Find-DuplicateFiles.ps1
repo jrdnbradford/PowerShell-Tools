@@ -97,13 +97,7 @@ while ($HashTable.Count -gt 1){
 
 # Open created results file if it exists
 if (Test-Path -Path $ResultsFile){
-    Write-Host "Complete! See $ResultsFile for details." -ForegroundColor Green
-    if ($IsMacOS) {
-        Open $ResultsFile -a TextEdit
-    }
-    if ($IsWindows) {
-        Notepad $ResultsFile
-    }   
+    Invoke-Item $ResultsFile
 } else {
     Write-Host "Complete! No duplicates." -ForegroundColor Green
 } 
