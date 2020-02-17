@@ -16,28 +16,29 @@ file that shows duplicate file locations.
 # Include subdirectories in user folder to check for duplicates
 $SearchDirectories = @("Desktop", "Documents", "Downloads")
 
-# Set home folder
-if ($IsMacOS) {
-    $UserFolder = $env:HOME
-}
+# Set directories
+$WorkingDirectory = [System.Environment]::CurrentDirectory
 if ($IsWindows) {
     $UserFolder = $env:USERPROFILE
-}   
+}
+else { # Must be MacOS or Linux
+    $UserFolder = $HOME
+}
 
 # Set results file name
-$ResultsFile = "$UserFolder/Desktop/results.txt"
+$ResultsFile = Join-Path -Path $WorkingDirectory -ChildPath "results.txt"
 if (Test-Path -Path $ResultsFile) {
     $I = 0
     do {
         $I++
-        $ResultsFile = "$UserFolder/Desktop/results($I).txt"
+        $ResultsFile = Join-Path -Path $WorkingDirectory -ChildPath "results($I).txt"
     } while (Test-Path -Path $ResultsFile)
 }
 
 # Create hashtable with full filenames as keys and file hashes as values
 $HashTable = @{}
 foreach ($Directory in $SearchDirectories) {
-    $Folder = "$UserFolder/$Directory"
+    $Folder = Join-Path -Path $UserFolder -ChildPath $Directory
     Write-Progress -Activity "Getting files..."
     $Files = Get-ChildItem -Path $Folder -Recurse -File 
     
